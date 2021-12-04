@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Socialite;
+use Str;
 
 class UserController extends Controller
 {
@@ -20,6 +22,26 @@ class UserController extends Controller
     {
         //
     }
+
+    public function loginWithGoogle(Request $request)
+    {
+        return Socialite::driver('google')->redirect();
+    }
+    public function loginWithGoogleRedirect(Request $request)
+    {
+        $user = Socialite::driver('google')->stateless()->user();
+        $user = User::firstOrCreate([
+            'email' => $user->email
+        ],[
+            'name'=>$user->name,
+            'email'=>$user->email,
+            'password'=>Hash::make(Str::random(24))
+        ]);
+        Auth::login($user);
+        return redirect('/home');
+        // dd($user);
+    }
+
 
     public function checkLogin(Request $request){
         $test = $request->validate([

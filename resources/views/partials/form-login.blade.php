@@ -18,6 +18,7 @@
                     <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Masuk</button>
                 </div>
             </form>
+            <a href="login-user/google"><button class="btn btn-primary w-100 my-2" ><i class="fa fa-google"></i> SignUp With Google</button></a>
             <h5 class="text-center mt-5 fw-light fs-5">Belum mendaftar? <a href="/register">Daftar</a></h5>
         </div>
         </div>

@@ -66,6 +66,9 @@ Route::post('/login-user', [UserController::class,'checkLogin']);
 Route::get('/logout-user', [UserController::class,'logOut']);
 Route::get('/logout-admin', [UserController::class,'logOut']);
 
+Route::get('/login-user/google', [UserController::class,'loginWithGoogle']);
+Route::get('/login-user/google/redirect', [UserController::class,'loginWithGoogleRedirect']);
+
 Route::prefix('home')->group(function(){
     Route::get('/', [HomeController::class, 'homeAll']);
     Route::get('/promo', [HomeController::class, 'homePromo']);

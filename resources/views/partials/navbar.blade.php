@@ -56,7 +56,7 @@
                             Masuk
                         </a>
                         <div class="dropdown-menu dropdown-menu-end p-4" id="modalLogin">
-                            <form action="/login-user" method="POST">
+                            <form action="/login-user" method="POST" class="">
                                 @csrf
                                 <div class="form-group">
                                     <label for="exampleDropdownFormEmail2">Email</label>
@@ -72,10 +72,12 @@
                                         <span style='color: red'>{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="text-center my-2">
+                                <div class="text-center my-2" >
                                     <button type="submit" class="btn btn-primary">Sign in</button>
                                 </div>
                             </form>
+                            <a href="login-user/google"><button class="btn btn-primary mx-auto w-100"><i class="fa fa-google"></i> Login With Google</button></a>
+
                             <div class="dropdown-divider"></div>
                             <div class="text-center">
                                 Belum mendaftar? <a href="/register">Daftar</a>
