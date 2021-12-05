@@ -19,6 +19,7 @@ class CreatePointHistoriesTable extends Migration
             $table->bigInteger('kredit')->default(0);
             $table->bigInteger('debit')->default(0);
             $table->string('keterangan',255);
+            $table->bigInteger('status')->default(0); // 1 = refund dari admin,
             $table->timestamps();
         });
     }

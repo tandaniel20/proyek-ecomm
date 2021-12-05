@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Buku;
 use App\Models\DPromo;
 use App\Models\HPromo;
+use App\Models\HRetur;
 use App\Models\HTrans;
 use App\Models\Kategori;
 use App\Models\Voucher;
@@ -109,7 +110,8 @@ class AdminViewController extends Controller
         $firstHeader = HTrans::where('status',1)->first();
         if ($firstHeader == null){
             return view('admin.bukti-transfer',[
-                "pemesanan" => HTrans::where('status',1)->get(),
+                "pemesanan" => HTrans::where('status','>=',1)->get(),
+                "current" => HTrans::where('status','>=',1)->first(),
                 "title" => "Bukti Transfer",
             ]);
         }
@@ -120,7 +122,8 @@ class AdminViewController extends Controller
         $firstHeader = HTrans::where('status',2)->first();
         if ($firstHeader == null){
             return view('admin.pengantaran',[
-                "pemesanan" => HTrans::where('status',2)->get(),
+                "pemesanan" => HTrans::where('status','>=',2)->get(),
+                "current" => HTrans::where('status','>=',2)->first(),
                 "title" => "Pengantaran",
             ]);
         }
@@ -128,9 +131,27 @@ class AdminViewController extends Controller
     }
 
     public function retur(){
-        return view('admin.retur',[
-            'title' => "Retur"
-        ]);
+        $firstHeader = HRetur::where('status',0)->first();
+        if ($firstHeader == null){
+            return view('admin.retur',[
+                "pemesanan" => HRetur::where('status','>=',0)->get(),
+                "current" => HRetur::where('status','>=',0)->first(),
+                "title" => "Retur",
+            ]);
+        }
+        return redirect('admin/retur/'.$firstHeader->id);
+    }
+
+    public function resend(){
+        $firstHeader = HRetur::where('status',1)->first();
+        if ($firstHeader == null){
+            return view('admin.resend',[
+                "pemesanan" => HRetur::where('status','>=',1)->where('status', '<', 99)->get(),
+                "current" => HRetur::where('status','>=',1)->where('status', '<', 99)->first(),
+                "title" => "Resend",
+            ]);
+        }
+        return redirect('admin/resend/'.$firstHeader->id);
     }
 
     public function voucher(){

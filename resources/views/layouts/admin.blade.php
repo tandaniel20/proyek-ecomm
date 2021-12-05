@@ -8,8 +8,23 @@
     {{-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     <title>Admin | {{ $title }}</title>
+    <style>
+        .card-img-top {
+            width: 100%;
+            height: 10vw;
+            object-fit: cover;
+        }
+    </style>
 </head>
 <body>
+    @php
+        use App\Models\HTrans;
+        use App\Models\HRetur;
+        $jumlahBuktiTransfer = count(HTrans::where('status',1)->get());
+        $jumlahPengantaran = count(HTrans::where('status',2)->get());
+        $jumlahRetur = count(HRetur::where('status',0)->get());
+        $jumlahResend = count(HRetur::where('status',1)->get());
+    @endphp
     <div class="d-flex flex-row">
         <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark vh-100 sticky-top" style="width: 280px;">
             <a href="/admin/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -33,19 +48,57 @@
                 </a>
             </li>
             <li>
-                <a href="/admin/bukti-transfer" class="nav-link {{ $title === "Bukti Transfer" ? "active" : "text-white" }}">
-                Konfirmasi Bukti Transfer
-                </a>
+                <div class="position-relative">
+                    @if ($jumlahBuktiTransfer > 0)
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning" style="font-size: 15px">
+                            {{ $jumlahBuktiTransfer }}
+                            <span class="visually-hidden">unread messages</span>
+                        </span>
+                    @endif
+                    <a href="/admin/bukti-transfer" class="nav-link {{ $title === "Bukti Transfer" ? "active" : "text-white" }}">
+                        Konfirmasi Bukti Transfer
+                    </a>
+                </div>
+
             </li>
             <li>
-                <a href="/admin/pengantaran" class="nav-link {{ $title === "Pengantaran" ? "active" : "text-white" }}">
-                Konfirmasi Pengantaran
-                </a>
+                <div class="position-relative">
+                    @if ($jumlahPengantaran > 0)
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning" style="font-size: 15px">
+                            {{ $jumlahPengantaran }}
+                            <span class="visually-hidden">unread messages</span>
+                        </span>
+                    @endif
+                    <a href="/admin/pengantaran" class="nav-link {{ $title === "Pengantaran" ? "active" : "text-white" }}">
+                        Konfirmasi Pengantaran
+                    </a>
+                </div>
             </li>
             <li>
-                <a href="/admin/retur" class="nav-link {{ $title === "Retur" ? "active" : "text-white" }}">
-                Konfirmasi Retur
-                </a>
+                <div class="position-relative">
+                    @if ($jumlahRetur > 0)
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning" style="font-size: 15px">
+                            {{ $jumlahRetur }}
+                            <span class="visually-hidden">unread messages</span>
+                        </span>
+                    @endif
+                    <a href="/admin/retur" class="nav-link {{ $title === "Retur" ? "active" : "text-white" }}">
+                        Konfirmasi Retur
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="position-relative">
+                    @if ($jumlahResend > 0)
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning" style="font-size: 15px">
+                            {{ $jumlahResend }}
+                            <span class="visually-hidden">unread messages</span>
+                        </span>
+                    @endif
+                    <a href="/admin/resend" class="nav-link {{ $title === "Resend" ? "active" : "text-white" }}">
+                        Konfirmasi Resend
+                    </a>
+                </div>
             </li>
             <li>
                 <a href="/admin/voucher" class="nav-link {{ $title === "Manajemen Kode Voucher" ? "active" : "text-white" }}">

@@ -85,6 +85,12 @@
         .rate > label:hover ~ input:checked ~ label {
             color: #c59b08;
         }
+
+        .card-img-top {
+            width: 100%;
+            height: 10vw;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>

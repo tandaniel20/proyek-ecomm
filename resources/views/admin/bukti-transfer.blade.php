@@ -8,7 +8,15 @@
                 <div class="card" style="">
                     <ul class="list-group list-group-flush">
                         @foreach ($pemesanan as $p)
-                            <a href="/admin/bukti-transfer/{{ $p["id"] }}"><li class="list-group-item {{ $p["id"]==$current["id"]? 'active':'' }}">{{ $p["id_pemesanan"] }}</li></a>
+                            <a href="/admin/bukti-transfer/{{ $p["id"] }}" style="text-decoration:none;"><li class="list-group-item text-white {{ $p["id"]==$current["id"]? 'active':'' }}
+                            @if ($p["status"] == 99)
+                                bg-danger
+                            @elseif ($p["status"] == 1)
+                                bg-warning
+                            @else
+                                bg-success
+                            @endif
+                            ">{{ $p["id_pemesanan"] }}</li></a>
                         @endforeach
                     </ul>
                 </div>
@@ -18,14 +26,37 @@
                     <div class="card" style="">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item text-center">
-                                <img src="<?= asset('storage/bukti/')?>/{{ $current["id"] }}.png" class="img-fluid" alt="..."><br>
-                                Bukti Transfer {{ $current["id_pemesanan"] }} : <br>
-                                Bukti Transfer dari : {{ $current->User->name }} <br>
-                                Jumlah Pembayaran {{ "Rp " . number_format($current["total"],0,',','.') }}<br>
-                                <a href="/admin/bukti-transfer/{{ $current["id"] }}/accept"><button type="button" class="btn btn-success m-2">Accept</button></a>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $current->id }}">
-                                    Reject
-                                </button>
+                                @if ($current->metode == 0)
+                                    <img src="<?= asset('storage/bukti/')?>/{{ $current["id"] }}.png" class="img-fluid" alt="..."><br>
+                                    Bukti Transfer {{ $current["id_pemesanan"] }} : <br>
+                                    Bukti Transfer dari : {{ $current->User->name }} <br>
+                                    Jumlah Pembayaran {{ "Rp " . number_format($current["total"],0,',','.') }}<br>
+                                    @if ($current->status == 1)
+                                        <a href="/admin/bukti-transfer/{{ $current["id"] }}/accept"><button type="button" class="btn btn-success m-2">Accept</button></a>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $current->id }}">
+                                            Reject
+                                        </button>
+                                    @elseif ($current->status == 99)
+                                        <span class="text-danger">Cancelled</span>
+                                    @else
+                                        <span class="text-success">Accepted</span>
+                                    @endif
+                                @else
+                                    Bukti Transfer {{ $current["id_pemesanan"] }} : <br>
+                                    Pembayaran dilakukan dengan point : <br>
+                                    Pemesan : {{ $current->User->name }} <br>
+                                    Jumlah Pembayaran {{ "Rp " . number_format($current["total"],0,',','.') }}<br>
+                                    @if ($current->status == 1)
+                                        <a href="/admin/bukti-transfer/{{ $current["id"] }}/accept"><button type="button" class="btn btn-success m-2">Accept</button></a>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $current->id }}">
+                                            Reject
+                                        </button>
+                                    @elseif ($current->status == 99)
+                                        <span class="text-danger">Cancelled</span>
+                                    @else
+                                        <span class="text-success">Accepted</span>
+                                    @endif
+                                @endif
 
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModal{{ $current->id }}" tabindex="-1" aria-labelledby="exampleModalLabel{{ $current->id }}" aria-hidden="true">

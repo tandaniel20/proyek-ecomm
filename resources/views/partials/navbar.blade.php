@@ -31,6 +31,16 @@
                 <button class="btn btn-outline-primary" type="submit">Search</button>
             </form>
             <ul class="navbar-nav col-3">
+            @php
+                use App\Models\Keranjang;
+                if (Auth::check()){
+                    $jumlahCart = 0;
+                    $keranjang = Keranjang::where('id_user',Auth::user()->id)->get();
+                    foreach ($keranjang as $ker) {
+                        $jumlahCart += $ker->qty;
+                    }
+                }
+            @endphp
                 @if (Auth::check())
                     <li class="nav-item dropdown text-center">
                         <a class="nav-link dropdown-toggle px-5" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -47,7 +57,16 @@
                     </li>
                     <li class="navbar-brand col-xs-2">
                         <a href="/cart" class="">
-                            <img src="/img/cart-logo.png" alt="Cart" width="24" height="24">
+                            <div class="position-relative">
+                                <img src="/img/cart-logo.png" alt="Cart" width="24" height="24">
+                                @if ($jumlahCart > 0)
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 10px">
+                                        {{ $jumlahCart }}
+                                        <span class="visually-hidden">unread messages</span>
+                                    </span>
+                                @endif
+                            </div>
+
                         </a>
                     </li>
                 @else

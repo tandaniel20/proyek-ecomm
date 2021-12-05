@@ -13,7 +13,7 @@
             <div class="card mb-3 w-auto" style="height: 15vh;">
                 <div class="d-flex flex-row">
                     <div class="align-self-center">
-                        <img src="/img/dummy.jpg" class="img-fluid img-thumbnail rounded-start" alt="" style="height: 15vh">
+                        <img src="<?= asset('storage/imageBuku/')?>/{{ $k->Buku["id"] }}.png" class="img-fluid img-thumbnail rounded-start" alt="" style="height: 15vh">
                     </div>
                     <div class="align-self-center">
                         <div class="card-body align-middle">

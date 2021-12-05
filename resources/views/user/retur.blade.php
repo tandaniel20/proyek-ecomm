@@ -20,8 +20,7 @@
                 <tr>
                     <th scope="col">Retur</th>
                     <th scope="col">Tanggal</th>
-                    <th scope="col">ID Pemesanan Lama</th>
-                    <th scope="col">ID Pemesanan Baru</th>
+                    <th scope="col">ID Pemesanan</th>
                     <th scope="col">Status</th>
                     <th scope="col">Detail</th>
                 </tr>
@@ -33,27 +32,20 @@
                         <th scope="row" class="align-middle">{{ $r->created_at }}</th>
                         <td class="align-middle">{{ $r->id_pemesanan_lama }}</td>
                         <td class="align-middle">
-                            @if ($r->id_pemesanan_baru != NULL)
-                                {{ $r->id_pemesanan_baru }}
-                            @else
-                                -
-                            @endif
-                        </td>
-                        <td class="align-middle">
                             @if ($r->status == 0)
                                 Menunggu Respons Admin
                             @elseif ($r->status == 1)
                                 Menunggu Resend Admin
                             @elseif ($r->status == 2)
                                 Resent
-                            @elseif ($r->status >= 3)
-                                Resent as Point
                             @elseif ($r->status == 99)
                                 Rejected
+                            @elseif ($r->status >= 3)
+                                Resent as Point
                             @endif
                         </td>
                         <td class="align-middle">
-                            <a href="/retur/{{ $p->id }}/detail"><button type="button" class="btn btn-warning">Detail</button></a>
+                            <a href="/retur/{{ $r->id }}/detail"><button type="button" class="btn btn-warning">Detail</button></a>
                         </td>
                     </tr>
                 @endforeach

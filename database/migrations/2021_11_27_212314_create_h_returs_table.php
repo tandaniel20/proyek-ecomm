@@ -24,6 +24,7 @@ class CreateHRetursTable extends Migration
             $table->bigInteger('metode')->default(1);   // 0 transfer, 1 point
             $table->bigInteger('status');               // 0 menunggu respons admin // 1 menunggu resend admin // 2 resent // 3 dikembalikan dalam bentuk point
                                                         // 99 rejected
+            $table->string('keterangan', 255)->nullable(true);
             $table->timestamps();
         });
     }

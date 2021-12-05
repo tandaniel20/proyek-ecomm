@@ -147,7 +147,7 @@ class AlamatController extends Controller
     {
         return view('user.alamat',[
             'title' => "Alamat",
-            'alamat' => Alamat::all(),
+            'alamat' => Alamat::where('id_user', Auth::user()->id)->get(),
             'kategori' => Kategori::all(),
         ]);
     }

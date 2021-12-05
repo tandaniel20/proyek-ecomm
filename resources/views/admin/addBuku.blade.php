@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('container')
     <div class="container pt-4" style="text-align: center">
-        <form action="/admin/buku/add-buku" method="post">
+        <form enctype="multipart/form-data" action="/admin/buku/add-buku" method="post">
             @csrf
             <div class="card text-center">
                 <div class="card-header">
@@ -28,6 +28,18 @@
                             <input type="number" class="w-50" name="harga" id="" placeholder="Harga Buku" value="{{ old('harga') }}">
                         </div>
                         @error('harga')
+                            <span style='color: red'>{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-5" style="text-align: right;">
+                            Stock
+                        </div>
+                        <div class="col" style="text-align: left; vertical-align: middle;">
+                            <input type="number" class="w-50" name="stock" id="" placeholder="Stock Buku" value="{{ old('stock') }}">
+                        </div>
+                        @error('stock')
                             <span style='color: red'>{{ $message }}</span>
                         @enderror
                     </div>
@@ -141,6 +153,15 @@
                         @error('deskripsikategori')
                             <span style='color: red'>{{ $message }}</span>
                         @enderror
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-5" style="text-align: right;">
+                            Upload Image Buku
+                        </div>
+                        <div class="col" style="text-align: left; vertical-align: middle;">
+                            <input type="file" accept="image/*" name="imageBuku" id="">
+                        </div>
                     </div>
                     <br>
                     <div class="row" style="text-align: center;">

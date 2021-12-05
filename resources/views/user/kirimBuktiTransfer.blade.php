@@ -14,7 +14,11 @@
 
         <form enctype="multipart/form-data" action="upload-bukti" method="post">
             @csrf
-            Upload image : <input type="file" accept="image/*" name="file" id=""><br><br>
+            Upload image : <input type="file" accept="image/*" name="file" id=""><br>
+            @if($errors->any())
+                <span class="text-danger">{{ $errors->first() }}</span><br>
+            @endif
+            <br>
             <input type="submit" value="Submit Bukti" class="btn btn-primary">
         </form>
         <hr>

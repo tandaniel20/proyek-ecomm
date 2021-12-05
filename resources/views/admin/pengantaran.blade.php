@@ -8,7 +8,15 @@
                 <div class="card" style="">
                     <ul class="list-group list-group-flush">
                         @foreach ($pemesanan as $p)
-                            <a href="/admin/pengantaran/{{ $p["id"] }}"><li class="list-group-item {{ $p["id"]==$current["id"]? 'active':'' }}">{{ $p["id_pemesanan"] }}</li></a>
+                            <a href="/admin/pengantaran/{{ $p["id"] }}" style="text-decoration: none;"><li class="list-group-item text-white {{ $p["id"]==$current["id"]? 'active':'' }}
+                                @if ($p["status"] == 99)
+                                    bg-danger
+                                @elseif ($p["status"] == 2)
+                                    bg-warning
+                                @else
+                                    bg-success
+                                @endif
+                            ">{{ $p["id_pemesanan"] }}</li></a>
                         @endforeach
                     </ul>
                 </div>
@@ -49,10 +57,16 @@
                                     </tbody>
                                 </table>
 
-                                <a href="/admin/pengantaran/{{ $current["id"] }}/accept"><button type="button" class="btn btn-success m-2">Terkirim</button></a>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $current->id }}">
-                                    Cancel
-                                </button>
+                                @if ($current->status == 2)
+                                    <a href="/admin/pengantaran/{{ $current["id"] }}/accept"><button type="button" class="btn btn-success m-2">Terkirim</button></a>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $current->id }}">
+                                        Cancel
+                                    </button>
+                                @elseif ($current->status == 99)
+                                    <span class="text-danger">Cancelled</span>
+                                @else
+                                    <span class="text-success">Sent</span>
+                                @endif
 
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModal{{ $current->id }}" tabindex="-1" aria-labelledby="exampleModalLabel{{ $current->id }}" aria-hidden="true">

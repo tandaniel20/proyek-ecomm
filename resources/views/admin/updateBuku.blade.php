@@ -34,6 +34,18 @@
                     <br>
                     <div class="row">
                         <div class="col-5" style="text-align: right;">
+                            Stock
+                        </div>
+                        <div class="col" style="text-align: left; vertical-align: middle;">
+                            <input type="number" class="w-50" name="stock" id="" placeholder="Stock Buku" value="{{ $buku["stock"] }}">
+                        </div>
+                        @error('stock')
+                            <span style='color: red'>{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-5" style="text-align: right;">
                             Penulis
                         </div>
                         <div class="col" style="text-align: left; vertical-align: middle;">

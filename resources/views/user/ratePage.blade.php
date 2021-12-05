@@ -11,7 +11,7 @@
         <div class="d-flex flex-wrap m-5">
             <div class="w-50 justify-content-center" style="height: 35vh;">
                 <div class="w-75">
-                    <img src="/img/dummy.jpg" alt="" class="img-thumbnail">
+                    <img src="<?= asset('storage/imageBuku/')?>/{{ $buku["id"] }}.png" alt="" class="img-thumbnail">
                 </div>
                 <div class="w-full">
                     <span>Current rate : </span>

@@ -123,6 +123,8 @@ Route::prefix('retur')->group(function(){
     Route::get('/ajuRetur', [HReturController::class, 'ajuRetur']);
     Route::get('/{id}/form', [HReturController::class, 'ajuReturDetail']);
     Route::post('/getNew', [HReturController::class, 'getNew']);
+    Route::post('{id}/doRetur', [HReturController::class, 'doRetur']);
+    Route::get('/{id}/detail', [HReturController::class, 'returDetail']);
 });
 
 Route::prefix('admin')->group(function(){
@@ -171,7 +173,20 @@ Route::prefix('admin')->group(function(){
         Route::get('/{id}/reject', [HTransController::class, 'adminPengantaranReject']);
     });
 
-    Route::get('/retur', [AdminViewController::class,'retur']);
+    Route::prefix('retur')->group(function(){
+        Route::get('/', [AdminViewController::class, 'retur']);
+        Route::get('/{id}', [HReturController::class, 'adminRetur']);
+        Route::get('/{id}/accept', [HReturController::class, 'adminReturAccept']);
+        Route::get('/{id}/reject', [HReturController::class, 'adminReturReject']);
+    });
+
+    Route::prefix('resend')->group(function(){
+        Route::get('/', [AdminViewController::class, 'resend']);
+        Route::get('/{id}', [HReturController::class, 'adminResend']);
+        Route::get('/{id}/accept', [HReturController::class, 'adminResendAccept']);
+        Route::get('/{id}/reject', [HReturController::class, 'adminResendReject']);
+    });
+
     Route::prefix('voucher')->group(function(){
         Route::get('/', [AdminViewController::class,'voucher']);
         Route::get('/add', [AdminViewController::class, 'addVoucher']);

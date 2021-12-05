@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Buku;
+use App\Models\Buku_Kategori;
 use App\Models\DPromo;
 use App\Models\Kategori;
 use App\Models\Rating;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class BukuController extends Controller
 {
@@ -44,6 +46,7 @@ class BukuController extends Controller
         $validatedData = $request->validate([
             'judul' => 'required|unique:buku,judul',
             'harga' => 'required',
+            'stock' => 'required',
             'penulis' => 'required',
             'berat' => 'required | numeric',
             'tahun' => 'required | numeric | digits:4',
@@ -55,29 +58,33 @@ class BukuController extends Controller
             'deskripsi' => 'required',
         ]);
 
-        $buku = new Buku;
-        $buku->judul = $request->judul;
-        $buku->harga = $request->harga;
-        $buku->penulis = $request->penulis;
-        $buku->penerbit = $request->penerbit;
-        $buku->tahun = $request->tahun;
-        $buku->bahasa = $request->bahasa;
-        $buku->berat = $request->berat;
-        $buku->dimensi = $request->dimensi1.' x '.$request->dimensi2;
-        $buku->cover = $request->cover;
-        $buku->deskripsi = $request->deskripsi;
-        $buku->save();
+        if ($request->hasFile('imageBuku')){
+            $buku = new Buku;
+            $buku->judul = $request->judul;
+            $buku->harga = $request->harga;
+            $buku->stock = $request->stock;
+            $buku->penulis = $request->penulis;
+            $buku->penerbit = $request->penerbit;
+            $buku->tahun = $request->tahun;
+            $buku->bahasa = $request->bahasa;
+            $buku->berat = $request->berat;
+            $buku->dimensi = $request->dimensi1.' x '.$request->dimensi2;
+            $buku->cover = $request->cover;
+            $buku->deskripsi = $request->deskripsi;
+            $buku->save();
+
+            Storage::putFileAs('/public/imageBuku', $request->file('imageBuku'), $buku->id.".png");
+        }else{
+            return redirect()->back()->withErrors(['msg' => 'Image buku belum dipilih!']);
+        }
         return redirect('admin/buku');
-        return view('admin.buku',[
-            "title" => 'Buku',
-            'buku' => Buku::all(),
-        ]);
     }
 
     public function cekUpdate(Request $request, $id){
         $validatedData = $request->validate([
             'judul' => 'required|unique:buku,judul,'.$id,
             'harga' => 'required',
+            'stock' => 'required',
             'penulis' => 'required',
             'berat' => 'required | numeric',
             'tahun' => 'required | numeric | digits:4',
@@ -91,6 +98,7 @@ class BukuController extends Controller
         $buku = Buku::where('id',$id)->first();
         $buku->judul = $request->judul;
         $buku->harga = $request->harga;
+        $buku->stock = $request->stock;
         $buku->penulis = $request->penulis;
         $buku->penerbit = $request->penerbit;
         $buku->tahun = $request->tahun;
@@ -101,21 +109,14 @@ class BukuController extends Controller
         $buku->deskripsi = $request->deskripsi;
         $buku->save();
         return redirect('admin/buku');
-        return view('admin.buku',[
-            "title" => 'Buku',
-            'buku' => Buku::all(),
-        ]);
     }
 
     public function delete($id){
         $buku = Buku::find($id);
         // dd($kategori);
         $buku->delete();
+        $bukuKategori = Buku_Kategori::where('id_buku',$id)->delete();
         return redirect('admin/buku');
-        return view('admin.buku',[
-            'title' => "Buku",
-            'buku' => Buku::all(),
-        ]);
     }
 
     public function detailBuku($id){

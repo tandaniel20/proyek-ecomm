@@ -61,8 +61,11 @@ class HTransController extends Controller
             $header = HTrans::where('id',$id)->first();
             $header->status = 1;
             $header->save();
+            return redirect('pemesanan');
+        }else{
+            return redirect()->back()->withErrors(['msg' => 'Bukti tidak ditemukan!']);
         }
-        return redirect('pemesanan');
+
     }
 
     public function checkOutPage(){
@@ -234,7 +237,7 @@ class HTransController extends Controller
     public function adminBuktiTransfer($id){
         return view('admin.bukti-transfer',[
             'current' => HTrans::where('id',$id)->first(),
-            "pemesanan" => HTrans::where('status',1)->get(),
+            "pemesanan" => HTrans::where('status','>=',1)->get(),
             "title" => "Bukti Transfer",
         ]);
     }
@@ -261,7 +264,7 @@ class HTransController extends Controller
     public function adminPengantaran($id){
         return view('admin.pengantaran',[
             'current' => HTrans::where('id',$id)->first(),
-            "pemesanan" => HTrans::where('status',2)->get(),
+            "pemesanan" => HTrans::where('status','>=',2)->get(),
             "title" => "Pengantaran",
         ]);
     }
@@ -294,6 +297,7 @@ class HTransController extends Controller
         $history->id_user = $header->id_user;
         $history->kredit = $header->total;
         $history->debit = 0;
+        $history->status = 1;
         $history->keterangan = "Pengantaran ".$header->id_pemesanan." Dibatalkan";
         $history->save();
 
