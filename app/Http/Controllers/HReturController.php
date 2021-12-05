@@ -90,7 +90,7 @@ class HReturController extends Controller
     }
 
     public function laporanAdminPage(){
-        return view('admin.laporanRetur');
+        return view('admin.laporanRetur',['title' => "Laporan Pengeluaran",]);
     }
 
     public function adminRetur($id){

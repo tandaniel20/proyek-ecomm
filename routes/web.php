@@ -111,14 +111,7 @@ Route::prefix('pemesanan')->group(function(){
     Route::post('/{id}/upload-bukti', [HTransController::class, 'uploadBukti']);
 });
 
-Route::prefix('laporanser')->group(function(){
-    Route::get('/', [HTransController::class, 'LaporanPageUser']);
-});
 
-Route::prefix('laporanadmin')->group(function(){
-    Route::get('/pemesanan', [HTransController::class, 'LaporanPageAdmin']);
-    Route::get('/retur', [HReturController::class, 'laporanAdminPage']);
-});
 
 Route::prefix('rate')->group(function(){
     Route::get('/{id}', [RatingController::class, 'ratePage']);
@@ -207,6 +200,14 @@ Route::prefix('admin')->group(function(){
         Route::get('/{id}/update', [AdminViewController::class, 'updateVoucher']);
         Route::post('/{id}/update-voucher', [VoucherController::class, 'cekUpdate']);
         Route::get('/{id}/delete', [VoucherController::class, 'delete']);
+    });
+    Route::prefix('laporanser')->group(function(){
+        Route::get('/', [HTransController::class, 'LaporanPageUser']);
+    });
+
+    Route::prefix('laporanadmin')->group(function(){
+        Route::get('/pemesanan', [HTransController::class, 'LaporanPageAdmin']);
+        Route::get('/retur', [HReturController::class, 'laporanAdminPage']);
     });
 });
 Route::get('/keAddAlamat', function()

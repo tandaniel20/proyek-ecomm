@@ -62,7 +62,7 @@ class HTransController extends Controller
     }
 
     public function LaporanPageAdmin(){
-        return view('admin.laporanPemesanan');
+        return view('admin.laporanPemesanan',['title' => "Laporan Pemesanan",]);
     }
 
     public function kirimBuktiPage($id){
