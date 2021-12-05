@@ -95,7 +95,7 @@
                                     <button type="submit" class="btn btn-primary">Sign in</button>
                                 </div>
                             </form>
-                            <a href="login-user/google"><button class="btn btn-primary mx-auto w-100"><i class="fa fa-google"></i> Login With Google</button></a>
+                            <a href="/login-user/google"><button class="btn btn-primary mx-auto w-100"><i class="fa fa-google"></i> Login With Google</button></a>
 
                             <div class="dropdown-divider"></div>
                             <div class="text-center">
