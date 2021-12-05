@@ -22,6 +22,17 @@
             {{ "Saldo Refund : Rp " . number_format(Auth::user()->saldo_refund,0,',','.') }}
         </div>
         <hr>
+        <div>
+            <form action="/point/search">
+                <span>waktu Dari </span>
+                <input type="datetime-local" name="from">
+                <span> ke </span>
+                <input type="datetime-local" name="to">
+                <button type="submit">Search</button>
+            </form>
+
+        </div>
+        <br>
         <h2>History Point</h2>
         <table class="table">
             <thead>

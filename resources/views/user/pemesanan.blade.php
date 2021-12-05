@@ -5,6 +5,16 @@
 @section('container')
     <div class="container mt-3">
         <h1>Pemesanan Saya</h1>
+        <div>
+            <form action="/pemesanan/search">
+                <span>waktu Dari </span>
+                <input type="datetime-local" name="from">
+                <span> ke </span>
+                <input type="datetime-local" name="to">
+                <button type="submit">Search</button>
+            </form>
+
+        </div>
         <hr>
         <table class="table">
             <thead>

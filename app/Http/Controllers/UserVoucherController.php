@@ -55,6 +55,13 @@ class UserVoucherController extends Controller
             'kategori' => Kategori::all(),
         ]);
     }
+    public function detailPointsearch(Request $request){
+        return view('user.point',[
+            'history' => PointHistory::where('id_user',Auth::user()->id)->whereBetween('created_at', [$request->from, $request->to,])->get(),
+            'kategori' => Kategori::all(),
+        ]);
+
+    }
     /**
      * Display a listing of the resource.
      *

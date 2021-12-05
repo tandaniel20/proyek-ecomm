@@ -81,6 +81,18 @@ class HReturController extends Controller
         ]);
     }
 
+
+    public function searchreturPage(Request $request){
+        return view('user.retur',[
+            'kategori' => Kategori::all(),
+            'retur' => HRetur::where('id_user', Auth::user()->id)->whereBetween('created_at', [$request->from, $request->to,])->get(),
+        ]);
+    }
+
+    public function laporanAdminPage(){
+        return view('admin.laporanRetur');
+    }
+
     public function adminRetur($id){
         return view('admin.retur',[
             'current' => HRetur::where('id',$id)->first(),

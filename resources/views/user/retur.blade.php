@@ -15,6 +15,16 @@
             </div>
         </div>
         <hr>
+        <div>
+            <form action="/retur/search">
+                <span>waktu Dari </span>
+                <input type="datetime-local" name="from">
+                <span> ke </span>
+                <input type="datetime-local" name="to">
+                <button type="submit">Search</button>
+            </form>
+
+        </div>
         <table class="table">
             <thead>
                 <tr>
