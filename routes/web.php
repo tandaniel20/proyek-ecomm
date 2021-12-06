@@ -83,6 +83,11 @@ Route::prefix('buku')->group(function(){
     Route::post('/{id}/addToCart', [KeranjangController::class, 'addToCart']);
 });
 
+Route::prefix('laporanuser')->group(function(){
+    Route::get('/', [HTransController::class, 'LaporanPageUser']);
+    Route::get('/search', [HTransController::class, 'LaporanPageUserSearch']);
+});
+
 Route::prefix('cart')->group(function(){
     Route::get('/', [KeranjangController::class, 'detailKeranjang']);
     Route::get('/{id}/remove', [KeranjangController::class, 'removeKeranjang']);
@@ -201,13 +206,13 @@ Route::prefix('admin')->group(function(){
         Route::post('/{id}/update-voucher', [VoucherController::class, 'cekUpdate']);
         Route::get('/{id}/delete', [VoucherController::class, 'delete']);
     });
-    Route::prefix('laporanser')->group(function(){
-        Route::get('/', [HTransController::class, 'LaporanPageUser']);
-    });
+
 
     Route::prefix('laporanadmin')->group(function(){
         Route::get('/pemesanan', [HTransController::class, 'LaporanPageAdmin']);
+        Route::get('/pemesanansearch', [HTransController::class, 'LaporanPageAdminSearch']);
         Route::get('/retur', [HReturController::class, 'laporanAdminPage']);
+        Route::get('/retursearch', [HReturController::class, 'laporanAdminPageSearch']);
     });
 });
 Route::get('/keAddAlamat', function()

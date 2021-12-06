@@ -90,7 +90,17 @@ class HReturController extends Controller
     }
 
     public function laporanAdminPage(){
-        return view('admin.laporanRetur',['title' => "Laporan Pengeluaran",]);
+        return view('admin.laporanRetur',[
+            'title' => "Laporan Pengeluaran",
+            'retur' => HRetur::where('status','>=',0)->get(),
+        ]);
+    }
+
+    public function laporanAdminPageSearch(Request $request){
+        return view('admin.laporanRetur',[
+            'title' => "Laporan Pengeluaran",
+            'retur' => HRetur::where('status','>=',0)->whereBetween('created_at', [$request->from, $request->to,])->get(),
+        ]);
     }
 
     public function adminRetur($id){

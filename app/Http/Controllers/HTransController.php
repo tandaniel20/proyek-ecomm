@@ -57,12 +57,28 @@ class HTransController extends Controller
     public function LaporanPageUser(){
         return view('user.laporanPemesanan',[
             'kategori' => Kategori::all(),
-            'pemesanan' => HTrans::where('id_user', Auth::user()->id)->get(),
+            'pemesanan' => HTrans::where('id_user', Auth::user()->id)->where('status','>',2)->get(),
+        ]);
+    }
+    public function LaporanPageUserSearch(Request $request){
+        return view('user.laporanPemesanan',[
+            'kategori' => Kategori::all(),
+            'pemesanan' => HTrans::where('id_user', Auth::user()->id)->where('status','>',2)->whereBetween('created_at', [$request->from, $request->to,])->get(),
         ]);
     }
 
     public function LaporanPageAdmin(){
-        return view('admin.laporanPemesanan',['title' => "Laporan Pemesanan",]);
+        return view('admin.laporanPemesanan',[
+            'title' => "Laporan Pemesanan",
+            'pemesanan' => HTrans::where('status','>',2)->get(),
+        ]);
+    }
+
+    public function LaporanPageAdminSearch(Request $request){
+        return view('admin.laporanPemesanan',[
+            'title' => "Laporan Pemesanan",
+            'pemesanan' => HTrans::where('status','>',2)->whereBetween('created_at', [$request->from, $request->to,])->get(),
+        ]);
     }
 
     public function kirimBuktiPage($id){
