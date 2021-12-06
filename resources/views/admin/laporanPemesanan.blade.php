@@ -16,6 +16,9 @@
 
     </div>
     <hr>
+    @php
+    $totalall=0;
+    @endphp
     @foreach ($pemesanan as $p)
     @php
         $totalsemua=0;
@@ -35,6 +38,7 @@
             @foreach ($p->Detail as $b)
             @php
             $totalsemua+=$b->subtotal;
+            $totalall+=$b->subtotal;
             @endphp
                 <tr>
                     <th scope="row" class="align-middle">{{ $b->Buku->judul }}</th>
@@ -55,6 +59,7 @@
         </tbody>
     </table>
     @endforeach
+    <h3>Total Seluruh Pengeluaran : {{ "Rp " . number_format($totalall,0,',','.') }}</h3>
 
 </div>
 @if($errors->any())
