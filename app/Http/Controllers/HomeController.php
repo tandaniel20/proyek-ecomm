@@ -15,6 +15,7 @@ class HomeController extends Controller
 {
     //
     public function homeAll(){
+        date_default_timezone_set('Asia/Jakarta');
         // $current_date = Carbon::now()->toDateTimeString();
         // dump($current_date);
         // update
@@ -35,6 +36,7 @@ class HomeController extends Controller
     }
 
     public function homeKategori($id){
+        date_default_timezone_set('Asia/Jakarta');
         $idBuku = Buku_Kategori::where('id_kategori',$id)->get();
         $listBuku = [];
         foreach ($idBuku as $row) {
@@ -55,6 +57,7 @@ class HomeController extends Controller
     }
 
     public function homePromo(){
+        date_default_timezone_set('Asia/Jakarta');
         $listBuku = Buku::all();
         $listPromo = [];
         foreach ($listBuku as $b) {
@@ -75,6 +78,7 @@ class HomeController extends Controller
     }
 
     public function homeSearch(Request $request){
+        date_default_timezone_set('Asia/Jakarta');
         $listBuku = Buku::where('judul', 'like', "%".$request->searchKey."%")->get();
         $listPromo = [];
         foreach ($listBuku as $b) {

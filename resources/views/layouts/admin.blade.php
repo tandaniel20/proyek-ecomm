@@ -42,11 +42,11 @@
                 Buku
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="/admin/promo" class="nav-link {{ $title === "Promo" ? "active" : "text-white" }}">
                 Promo
                 </a>
-            </li>
+            </li> --}}
             <li>
                 <div class="position-relative">
                     @if ($jumlahBuktiTransfer > 0)
@@ -106,7 +106,7 @@
                 </a>
             </li>
             <li>
-                <a href="/admin/laporanadmin/pemesanan" class="nav-link {{ $title === "Laporan Pemasukan" ? "active" : "text-white" }}">
+                <a href="/admin/laporanadmin/pemesanan" class="nav-link {{ $title === "Laporan Pemesanan" ? "active" : "text-white" }}">
                 Laporan Pemasukan
                 </a>
             </li>

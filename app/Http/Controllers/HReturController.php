@@ -26,6 +26,7 @@ class HReturController extends Controller
     }
 
     public function adminResendReject($id){
+        date_default_timezone_set('Asia/Jakarta');
         $header = HRetur::where('id',$id)->first();
         $header->status = 3;
         $header->save();
@@ -49,6 +50,7 @@ class HReturController extends Controller
     }
 
     public function adminResendAccept($id){
+        date_default_timezone_set('Asia/Jakarta');
         $header = HRetur::where('id',$id)->first();
 
         //cek apakah buku mencukupi
@@ -112,6 +114,7 @@ class HReturController extends Controller
     }
 
     public function adminReturAccept($id){
+        date_default_timezone_set('Asia/Jakarta');
         $header = HRetur::where('id',$id)->first();
         $header->status = 1;
         $header->save();
@@ -119,6 +122,7 @@ class HReturController extends Controller
     }
 
     public function adminReturReject($id){
+        date_default_timezone_set('Asia/Jakarta');
         $header = HRetur::where('id',$id)->first();
         $header->status = 99;
         $header->save();
@@ -136,6 +140,7 @@ class HReturController extends Controller
     }
 
     public function doRetur(Request $req, $id){
+        date_default_timezone_set('Asia/Jakarta');
         $adasatu = false;
         for ($i=0; $i < count($req->maxBuku); $i++) {
             if ($req->jumlahBuku[$i] > $req->maxBuku[$i] || $req->jumlahBuku[$i] < 0){
@@ -195,6 +200,7 @@ class HReturController extends Controller
     }
 
     public function ajuRetur(){
+        date_default_timezone_set('Asia/Jakarta');
         $pemesanan = HTrans::where('id_user', Auth::user()->id)->where('status',3)->get();
         if (count($pemesanan) == 0){
             return redirect()->back()->withErrors(['msg' => 'Tidak ada pemesanan yang bisa diretur!']);

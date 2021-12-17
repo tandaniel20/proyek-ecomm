@@ -37,6 +37,7 @@ class BukuKategoriController extends Controller
      */
     public function store(Request $request, $id)
     {
+        date_default_timezone_set('Asia/Jakarta');
         //
         // dump($id);
         // dump($request);

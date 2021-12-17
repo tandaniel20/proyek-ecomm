@@ -25,10 +25,12 @@ class UserController extends Controller
 
     public function loginWithGoogle(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         return Socialite::driver('google')->redirect();
     }
     public function loginWithGoogleRedirect(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $user = Socialite::driver('google')->stateless()->user();
         $user = User::firstOrCreate([
             'email' => $user->email
@@ -44,6 +46,7 @@ class UserController extends Controller
 
 
     public function checkLogin(Request $request){
+        date_default_timezone_set('Asia/Jakarta');
         $test = $request->validate([
             'email' => ['required'],
             'password' => ['required']
@@ -91,7 +94,7 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
-        //
+        date_default_timezone_set('Asia/Jakarta');
         $validatedData = $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:user,email',
@@ -116,7 +119,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        date_default_timezone_set('Asia/Jakarta');
         $validatedData = $request->validate([
             'name' => 'required',
             'email' => 'required|email',

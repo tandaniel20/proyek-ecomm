@@ -58,12 +58,12 @@
                     <br>
                     <div class="row">
                         <div class="col-5" style="text-align: right;">
-                            Durasi
+                            Tanggal Akhir
                         </div>
                         <div class="col" style="text-align: left; vertical-align: middle;">
-                            <input class="w-50" type="number" name="durasi" id="" placeholder="Hari" value="{{ $voucher["durasi"] }}">
+                            <input type="datetime-local" name="end" value="{{ $voucher["end"] }}">
                         </div>
-                        @error('durasi')
+                        @error('end')
                             <span style='color: red'>{{ $message }}</span>
                         @enderror
                     </div>

@@ -35,13 +35,13 @@ class VoucherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        date_default_timezone_set('Asia/Jakarta');
         $validatedData = $request->validate([
             'judul' => 'required|unique:voucher,judul',
             'kode' => 'required | string | min:11 | max:11 | unique:voucher,kode',
             'batas' => 'required | numeric',
             'jumlahpoint' => 'required | numeric',
-            'durasi' => 'required | numeric',
+            'end' => 'required',
         ]);
 
         $voucher = new voucher;
@@ -49,7 +49,7 @@ class VoucherController extends Controller
         $voucher->kode = $request->kode;
         $voucher->batas = $request->batas;
         $voucher->jumlahpoint = $request->jumlahpoint;
-        $voucher->durasi = $request->durasi;
+        $voucher->end = $request->end;
         $voucher->save();
         return view('admin.voucher',[
             "title" => 'Voucher',
@@ -59,12 +59,13 @@ class VoucherController extends Controller
     }
 
     public function cekUpdate(Request $request, $id){
+        date_default_timezone_set('Asia/Jakarta');
         $validatedData = $request->validate([
             'judul' => 'required|unique:voucher,judul,'.$id,
             'kode' => 'required | string | min:11 | max:11 | unique:voucher,kode,'.$id,
             'batas' => 'required | numeric',
             'jumlahpoint' => 'required | numeric',
-            'durasi' => 'required | numeric',
+            'end' => 'required',
         ]);
 
         $voucher = Voucher::where('id',$id)->first();
@@ -72,7 +73,7 @@ class VoucherController extends Controller
         $voucher->kode = $request->kode;
         $voucher->batas = $request->batas;
         $voucher->jumlahpoint = $request->jumlahpoint;
-        $voucher->durasi = $request->durasi;
+        $voucher->end = $request->end;
         $voucher->save();
         return view('admin.voucher',[
             "title" => 'Voucher',
@@ -82,6 +83,7 @@ class VoucherController extends Controller
     }
 
     public function delete($id){
+        date_default_timezone_set('Asia/Jakarta');
         $voucher = Voucher::find($id);
         $voucher->delete();
         return view('admin.voucher',[

@@ -40,7 +40,7 @@
                                     Jumlah Point : {{ "Rp " . number_format($current["jumlahpoint"],0,',','.') }}
                                 </div>
                                 <div>
-                                    Created at : {{ $current["created_at"] }}
+                                    Akhir Voucher : {{ $current["end"] }}
                                 </div>
                                 <div>
                                     <a href="/admin/voucher/{{ $current["id"] }}/update"><button class="btn btn-warning">Edit</button></a>

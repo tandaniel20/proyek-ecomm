@@ -19,7 +19,7 @@ class CreateVouchersTable extends Migration
             $table->string('kode');
             $table->bigInteger('batas');
             $table->bigInteger('jumlahpoint');
-            $table->bigInteger('durasi');
+            $table->dateTime('end');
             $table->timestamps();
             $table->softDeletes();
         });

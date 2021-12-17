@@ -23,6 +23,7 @@ class KeranjangController extends Controller
     }
 
     public function addToCart(Request $req, $id){
+        date_default_timezone_set('Asia/Jakarta');
         $currentBuku = Buku::where('id',$id)->first();
         if ($req->jumlahBarang == 0){
             return redirect()->back()->withErrors(['msg' => 'Total barang tidak boleh 0!']);
@@ -47,6 +48,7 @@ class KeranjangController extends Controller
     }
 
     public function detailKeranjang(){
+        date_default_timezone_set('Asia/Jakarta');
         $listPromo = [];
         foreach (Buku::all() as $b) {
             $promo = DPromo::where('id_buku', $b["id"])->where('tanggal_exp','>=',Carbon::now()->toDateTimeString())->orderBy('harga_promo', 'ASC')->first();
@@ -62,11 +64,13 @@ class KeranjangController extends Controller
     }
 
     public function removeKeranjang($id){
+        date_default_timezone_set('Asia/Jakarta');
         $deleteData = Keranjang::where('id',$id)->delete();
         return redirect()->back();
     }
 
     public function tambahItem($id){
+        date_default_timezone_set('Asia/Jakarta');
         $itemKeranjang = Keranjang::where('id',$id)->first();
         $buku = Buku::where('id',$itemKeranjang->id_buku)->first();
         if ($buku->stock < $itemKeranjang->qty + 1){
@@ -79,6 +83,7 @@ class KeranjangController extends Controller
     }
 
     public function kurangItem($id){
+        date_default_timezone_set('Asia/Jakarta');
         $itemKeranjang = Keranjang::where('id',$id)->first();
         if ($itemKeranjang->qty == 1){
             $deleteItemKeranjang = Keranjang::where('id',$id)->delete();

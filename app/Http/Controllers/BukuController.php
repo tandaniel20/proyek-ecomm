@@ -43,6 +43,7 @@ class BukuController extends Controller
     public function store(Request $request)
     {
         //
+        date_default_timezone_set('Asia/Jakarta');
         $validatedData = $request->validate([
             'judul' => 'required|unique:buku,judul',
             'harga' => 'required',
@@ -81,6 +82,7 @@ class BukuController extends Controller
     }
 
     public function cekUpdate(Request $request, $id){
+        date_default_timezone_set('Asia/Jakarta');
         $validatedData = $request->validate([
             'judul' => 'required|unique:buku,judul,'.$id,
             'harga' => 'required',
@@ -112,6 +114,7 @@ class BukuController extends Controller
     }
 
     public function delete($id){
+        date_default_timezone_set('Asia/Jakarta');
         $buku = Buku::find($id);
         // dd($kategori);
         $buku->delete();
@@ -169,6 +172,7 @@ class BukuController extends Controller
     }
 
     public function wishBuku($id){
+        date_default_timezone_set('Asia/Jakarta');
         $wishlist = new Wishlist;
         $wishlist->id_buku = $id;
         $wishlist->id_user = Auth::user()->id;
@@ -177,6 +181,7 @@ class BukuController extends Controller
     }
 
     public function removeWishBuku($id){
+        date_default_timezone_set('Asia/Jakarta');
         $deleteWishlist = Wishlist::where('id_user',Auth::user()->id)->where('id_buku',$id)->delete();
         return redirect('buku/'.$id.'/detail');
     }

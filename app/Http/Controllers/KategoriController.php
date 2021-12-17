@@ -35,7 +35,7 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        date_default_timezone_set('Asia/Jakarta');
         $validatedData = $request->validate([
             'namakategori' => 'required|unique:kategori,namakategori,',
             'deskripsikategori' => 'required'
@@ -79,13 +79,14 @@ class KategoriController extends Controller
      */
     public function update(Request $request, Kategori $kategori)
     {
-        //
+        date_default_timezone_set('Asia/Jakarta');
         $kategori->namakategori = $request->namakategori;
         $kategori->deskripsikategori = $request->deskripsikategori;
         $kategori->save();
     }
 
     public function delete($id){
+        date_default_timezone_set('Asia/Jakarta');
         $kategori = Kategori::find($id);
         // dd($kategori);
         $kategori->delete();
@@ -93,6 +94,7 @@ class KategoriController extends Controller
     }
 
     public function cekUpdate(Request $request, $id){
+        date_default_timezone_set('Asia/Jakarta');
         $validatedData = $request->validate([
             'namakategori' => 'required|unique:kategori,namakategori,'.$id,
             'deskripsikategori' => 'required'

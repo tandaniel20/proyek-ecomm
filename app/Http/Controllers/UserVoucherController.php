@@ -7,6 +7,7 @@ use App\Models\PointHistory;
 use App\Models\User;
 use App\Models\UserVoucher;
 use App\Models\Voucher;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,38 +15,41 @@ class UserVoucherController extends Controller
 {
 
     public function cekVoucher(Request $req){
+        date_default_timezone_set('Asia/Jakarta');
         $voucher = Voucher::where('kode',$req->kodeVoucher)->first();
         if ($voucher!=null){
-            if ($voucher->batas != 0){
-                $cekPernah = UserVoucher::where('id_user', Auth::user()->id)->where('id_voucher',$voucher->id)->first();
-                if ($cekPernah == null){
-                    //kurangi batas voucher
-                    $voucher->batas = $voucher->batas-1;
-                    $voucher->save();
+            if ($voucher->end > Carbon::now()){
+                if ($voucher->batas != 0){
+                    $cekPernah = UserVoucher::where('id_user', Auth::user()->id)->where('id_voucher',$voucher->id)->first();
+                    if ($cekPernah == null){
+                        //kurangi batas voucher
+                        $voucher->batas = $voucher->batas-1;
+                        $voucher->save();
 
-                    //tambah saldo point
-                    $dataUser = User::where('id',Auth::user()->id)->first();
-                    $dataUser->point = $dataUser->point + $voucher->jumlahpoint;
-                    $dataUser->save();
+                        //tambah saldo point
+                        $dataUser = User::where('id',Auth::user()->id)->first();
+                        $dataUser->point = $dataUser->point + $voucher->jumlahpoint;
+                        $dataUser->save();
 
-                    //tambah ke user_voucher biar tidak bisa dipakai lagi
-                    $dataUserVoucher = new UserVoucher;
-                    $dataUserVoucher->id_user = Auth::user()->id;
-                    $dataUserVoucher->id_voucher = $voucher->id;
-                    $dataUserVoucher->save();
+                        //tambah ke user_voucher biar tidak bisa dipakai lagi
+                        $dataUserVoucher = new UserVoucher;
+                        $dataUserVoucher->id_user = Auth::user()->id;
+                        $dataUserVoucher->id_voucher = $voucher->id;
+                        $dataUserVoucher->save();
 
-                    //tambah ke history voucher
-                    $dataHistory = new PointHistory;
-                    $dataHistory->id_user = Auth::user()->id;
-                    $dataHistory->kredit = $voucher->jumlahpoint;
-                    $dataHistory->debit = 0;
-                    $dataHistory->keterangan = 'Redeem Kode Voucher '.$voucher->judul;
-                    $dataHistory->save();
+                        //tambah ke history voucher
+                        $dataHistory = new PointHistory;
+                        $dataHistory->id_user = Auth::user()->id;
+                        $dataHistory->kredit = $voucher->jumlahpoint;
+                        $dataHistory->debit = 0;
+                        $dataHistory->keterangan = 'Redeem Kode Voucher '.$voucher->judul;
+                        $dataHistory->save();
 
-                    //return back
-                    return redirect()->back();
-                }else return redirect()->back()->withErrors(['msg' => 'Anda sudah pernah menggunakan kode voucher ini!']);
-            }else return redirect()->back()->withErrors(['msg' => 'Batas kode voucher sudah habis!']);
+                        //return back
+                        return redirect()->back();
+                    }else return redirect()->back()->withErrors(['msg' => 'Anda sudah pernah menggunakan kode voucher ini!']);
+                }else return redirect()->back()->withErrors(['msg' => 'Batas kode voucher sudah habis!']);
+            }else return redirect()->back()->withErrors(['msg' => 'Voucher telah melebihi batas tanggal akhir!']);
         }else return redirect()->back()->withErrors(['msg' => 'Kode Voucher tidak ditemukan!']);
     }
 

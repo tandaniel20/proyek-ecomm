@@ -12,6 +12,7 @@ class RatingController extends Controller
 {
 
     public function ratePage($id){
+        date_default_timezone_set('Asia/Jakarta');
         $rates = Rating::where('id_buku', $id)->get();
         $jumlahRating = 0;
         foreach ($rates as $r) {
@@ -27,6 +28,7 @@ class RatingController extends Controller
     }
 
     public function rateSubmit(Request $req, $id){
+        date_default_timezone_set('Asia/Jakarta');
         $deleteRates = Rating::where('id_user', Auth::user()->id)->where('id_buku',$id)->delete();
         $newRate = new Rating;
         $newRate->id_user = Auth::user()->id;

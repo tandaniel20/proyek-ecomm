@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 class AlamatController extends Controller
 {
     function prosesData(Request $request) {
+        date_default_timezone_set('Asia/Jakarta');
         $rules = [
 
             'penerima' => 'required | max:255',
@@ -59,6 +60,7 @@ class AlamatController extends Controller
     }
     public function updatealamat(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $rules = [
             'penerima' => 'required | max:255',
             'nohp' => 'required | numeric | digits_between:8,12',
@@ -104,6 +106,7 @@ class AlamatController extends Controller
         return redirect('alamat');
     }
     public function deletealamat($id){
+        date_default_timezone_set('Asia/Jakarta');
         $data = Alamat::find($id);
         $data->delete();
         echo "<script>alert('Sukses Delete Alamat')</script>";

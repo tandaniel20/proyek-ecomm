@@ -32,6 +32,7 @@ class HPromoController extends Controller
     }
 
     public function deletePromo(Request $request, $id){
+        date_default_timezone_set('Asia/Jakarta');
         $deletedRows = DPromo::where('id_promo',$id)->delete();
         $deletedRows = HPromo::where('id',$id)->delete();
 
@@ -51,6 +52,7 @@ class HPromoController extends Controller
      */
     public function store(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         //
         // dd($request);
         $validatedData = $request->validate([
@@ -123,6 +125,7 @@ class HPromoController extends Controller
     }
 
     public function cekUpdate(Request $request, $id){
+        date_default_timezone_set('Asia/Jakarta');
         $validatedData = $request->validate([
             'judul' => 'required|unique:h_promo,judul,'.$id,
             'jangkawaktu' => 'required|numeric|min:1',

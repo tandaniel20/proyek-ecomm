@@ -49,6 +49,7 @@ class HTransController extends Controller
     }
 
     public function searchpemesananPage(Request $request){
+        date_default_timezone_set('Asia/Jakarta');
         return view('user.pemesanan',[
             'kategori' => Kategori::all(),
             'pemesanan' => HTrans::where('id_user', Auth::user()->id)->whereBetween('created_at', [$request->from, $request->to,])->get(),
@@ -61,6 +62,7 @@ class HTransController extends Controller
         ]);
     }
     public function LaporanPageUserSearch(Request $request){
+        date_default_timezone_set('Asia/Jakarta');
         return view('user.laporanPemesanan',[
             'kategori' => Kategori::all(),
             'pemesanan' => HTrans::where('id_user', Auth::user()->id)->where('status','>',2)->whereBetween('created_at', [$request->from, $request->to,])->get(),
@@ -75,6 +77,7 @@ class HTransController extends Controller
     }
 
     public function LaporanPageAdminSearch(Request $request){
+        date_default_timezone_set('Asia/Jakarta');
         return view('admin.laporanPemesanan',[
             'title' => "Laporan Pemesanan",
             'pemesanan' => HTrans::where('status','>',2)->whereBetween('created_at', [$request->from, $request->to,])->get(),
@@ -89,6 +92,7 @@ class HTransController extends Controller
     }
 
     public function uploadBukti(Request $req, $id){
+        date_default_timezone_set('Asia/Jakarta');
         if($req->hasFile('file')){
             Storage::putFileAs('/public/bukti', $req->file('file'), $id.".png");
             $header = HTrans::where('id',$id)->first();
@@ -102,6 +106,7 @@ class HTransController extends Controller
     }
 
     public function checkOutPage(){
+        date_default_timezone_set('Asia/Jakarta');
         $listPromo = [];
         foreach (Buku::all() as $b) {
             $promo = DPromo::where('id_buku', $b["id"])->where('tanggal_exp','>=',Carbon::now()->toDateTimeString())->orderBy('harga_promo', 'ASC')->first();
@@ -121,6 +126,7 @@ class HTransController extends Controller
     }
 
     public function checkOut(Request $req){
+        date_default_timezone_set('Asia/Jakarta');
         $stockKurang = false; // true = kalau misal stock tidak mencukupi, false = sebaliknya
         foreach (Keranjang::where('id_user', Auth::user()->id)->get() as $k) {
             foreach (Buku::all() as $b) {
@@ -276,6 +282,7 @@ class HTransController extends Controller
     }
 
     public function adminBuktiAccept($id){
+        date_default_timezone_set('Asia/Jakarta');
         $header = HTrans::where('id',$id)->first();
         $header->status = 2;
         $header->save();
@@ -283,6 +290,7 @@ class HTransController extends Controller
     }
 
     public function adminBuktiReject($id){
+        date_default_timezone_set('Asia/Jakarta');
         $header = HTrans::where('id',$id)->first();
         $header->status = 99;
         foreach ($header->Detail as $d) {
@@ -303,6 +311,7 @@ class HTransController extends Controller
     }
 
     public function adminPengantaranAccept($id){
+        date_default_timezone_set('Asia/Jakarta');
         $header = HTrans::where('id',$id)->first();
         $header->status = 3;
         $header->save();
@@ -310,6 +319,7 @@ class HTransController extends Controller
     }
 
     public function adminPengantaranReject($id){
+        date_default_timezone_set('Asia/Jakarta');
         $header = HTrans::where('id',$id)->first();
         $header->status = 99;
         foreach ($header->Detail as $d) {
