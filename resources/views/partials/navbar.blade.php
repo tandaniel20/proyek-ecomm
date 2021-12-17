@@ -27,7 +27,7 @@
             </div>
             <form class= "d-flex me-auto col-5" method="POST" action="/home/search">
                 @csrf
-                <input class="form-control me-2" name="searchKey" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control me-2" name="searchKey" type="search" placeholder="Cari Judul Buku" aria-label="Search">
                 <button class="btn btn-outline-primary" type="submit">Search</button>
             </form>
             <ul class="navbar-nav col-3">
