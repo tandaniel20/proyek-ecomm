@@ -39,7 +39,7 @@
             {{-- @dd($p->Detail) --}}
             @foreach ($p->Detail as $b)
             @php
-            $totalall=$b->subtotal;
+            $totalall+=$b->subtotal;
             $totalsemua+=$b->subtotal;
             @endphp
                 <tr>

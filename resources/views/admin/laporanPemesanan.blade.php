@@ -59,7 +59,7 @@
         </tbody>
     </table>
     @endforeach
-    <h3>Total Seluruh Pengeluaran : {{ "Rp " . number_format($totalall,0,',','.') }}</h3>
+    <h3>Total Seluruh Pemasukan : {{ "Rp " . number_format($totalall,0,',','.') }}</h3>
 
 </div>
 @if($errors->any())
